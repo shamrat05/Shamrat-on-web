@@ -25,7 +25,12 @@
     <nav class="navbar" id="navbar">
         <div class="nav-container">
             <div class="nav-logo">
-                <a href="#home" class="logo">SH</a>
+                <div class="animated-logo">
+                    <div class="logo-text" id="logo-text">SH</div>
+                    <div class="logo-image" id="logo-image">
+                        <img src="imgs/shamrat-profile.jpg" alt="Md. Shamrat Hossain">
+                    </div>
+                </div>
             </div>
             
             <div class="nav-menu" id="nav-menu">
@@ -73,20 +78,7 @@
                         data-driven solutions that drive organizational growth and efficiency.
                     </p>
                     
-                    <div class="hero-contact">
-                        <a href="tel:+8801727805705" class="contact-link">
-                            <i class="fas fa-phone"></i>
-                            <span>+88 01727-805705</span>
-                        </a>
-                        <a href="https://linkedin.com/in/shamrat5" target="_blank" class="contact-link">
-                            <i class="fab fa-linkedin"></i>
-                            <span>/shamrat5</span>
-                        </a>
-                        <div class="contact-link location">
-                            <i class="fas fa-map-marker-alt"></i>
-                            <span>Azimpur, Dhaka, Bangladesh</span>
-                        </div>
-                    </div>
+                    <!-- Contact info moved to bottom contact section only -->
                     
                     <div class="hero-cta">
                         <a href="#portfolio" class="btn btn-primary">View My Work</a>
@@ -98,6 +90,13 @@
                     <div class="image-container">
                         <img src="imgs/shamrat-profile.jpg" alt="Md. Shamrat Hossain" class="profile-image">
                         <div class="image-glow"></div>
+                    <div class="motivational-text">
+                        <span class="motivation-word">Excellence</span>
+                        <span class="motivation-word">Innovation</span>
+                        <span class="motivation-word">Leadership</span>
+                        <span class="motivation-word">Growth</span>
+                        <span class="motivation-word">Success</span>
+                    </div>
                     </div>
                 </div>
             </div>
@@ -593,6 +592,21 @@
                 <div class="contact-info">
                     <div class="contact-item">
                         <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h4>Email</h4>
+                            <p>
+                                <a href="#" class="protected-email" data-user="shamrat.r.h" data-domain="gmail.com">
+                                    <span class="email-display"><span class="__cf_email__" data-cfemail="6a19020b07180b1e441844022a0d070b030644090507">[email&#160;protected]</span></span>
+                                    <noscript>shamrat.r.h[at]gmail[dot]com</noscript>
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">
                             <i class="fas fa-phone"></i>
                         </div>
                         <div class="contact-details">
@@ -643,7 +657,7 @@
                         <p class="form-note">
                             <i class="fas fa-info-circle"></i>
                             Or email directly: <a href="#" class="protected-email" data-user="shamrat.r.h" data-domain="gmail.com">
-                                <span class="email-display"><span class="__cf_email__" data-cfemail="700318111d0211045e025e1830171d11191c5e131f1d">[email&#160;protected]</span></span>
+                                <span class="email-display"><span class="__cf_email__" data-cfemail="b0c3d8d1ddc2d1c49ec29ed8f0d7ddd1d9dc9ed3dfdd">[email&#160;protected]</span></span>
                                 <noscript>shamrat.r.h[at]gmail[dot]com</noscript>
                             </a>
                         </p>
@@ -665,7 +679,7 @@
                 <div class="footer-social">
                     <a href="#" class="social-link protected-email" data-user="shamrat.r.h" data-domain="gmail.com">
                         <i class="fas fa-envelope"></i>
-                        <span class="email-display" style="display: none;"><span class="__cf_email__" data-cfemail="f5869d9498879481db87db9db59298949c99db969a98">[email&#160;protected]</span></span>
+                        <span class="email-display" style="display: none;"><span class="__cf_email__" data-cfemail="addec5ccc0dfccd983df83c5edcac0ccc4c183cec2c0">[email&#160;protected]</span></span>
                         <noscript>shamrat.r.h[at]gmail[dot]com</noscript>
                     </a>
                     <a href="tel:+8801727805705" class="social-link">
@@ -686,6 +700,12 @@
     <!-- Back to Top Button -->
     <button class="back-to-top" id="back-to-top" aria-label="Back to top">
         <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Floating Email Button -->
+    <button class="floating-email" id="floating-email" aria-label="Send Email">
+        <i class="fas fa-envelope"></i>
+        <span class="email-tooltip">Send Email</span>
     </button>
 
     <!-- JavaScript -->
