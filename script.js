@@ -276,31 +276,41 @@ class PortfolioManager {
     }
 
     filterPortfolio(filter) {
-        // First, hide all items
-        this.portfolioItems.forEach(item => {
-            item.classList.add('hidden');
-            item.classList.remove('show');
-        });
-        
-        // Then show relevant items with delay
         const visibleItems = [];
+        const hiddenItems = [];
+        
+        // Categorize items
         this.portfolioItems.forEach(item => {
             const category = item.getAttribute('data-category');
             if (filter === 'all' || category === filter) {
                 visibleItems.push(item);
+            } else {
+                hiddenItems.push(item);
             }
         });
         
-        // Show items with staggered animation
-        visibleItems.forEach((item, index) => {
-            setTimeout(() => {
-                item.classList.remove('hidden');
-                item.classList.add('show');
-                setTimeout(() => {
-                    item.classList.remove('show');
-                }, 600);
-            }, index * 150);
+        // First, hide all items smoothly
+        this.portfolioItems.forEach(item => {
+            item.style.transition = 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
+            item.style.opacity = '0';
+            item.style.transform = 'scale(0.7) translateY(30px)';
         });
+        
+        // Then show visible items with staggered animation
+        setTimeout(() => {
+            visibleItems.forEach((item, index) => {
+                setTimeout(() => {
+                    item.style.opacity = '1';
+                    item.style.transform = 'scale(1) translateY(0)';
+                    item.classList.add('show');
+                    
+                    // Remove show class after animation completes
+                    setTimeout(() => {
+                        item.classList.remove('show');
+                    }, 600);
+                }, index * 120);
+            });
+        }, 200);
     }
 
     updateActiveFilter(activeBtn) {
@@ -376,64 +386,6 @@ class AutoLogoTransitionManager {
         if (this.animatedLogo) {
             this.animatedLogo.classList.remove('show-image');
         }
-    }
-}
-
-// ===============================================
-// Email Copy Manager
-// ===============================================
-
-class EmailCopyManager {
-    constructor() {
-        this.emailCopyBtns = document.querySelectorAll('.email-copy-btn');
-        this.init();
-    }
-    
-    init() {
-        this.bindEvents();
-    }
-    
-    bindEvents() {
-        this.emailCopyBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                const email = btn.getAttribute('data-email');
-                this.copyToClipboard(email);
-                this.showCopyFeedback(btn);
-            });
-        });
-    }
-    
-    copyToClipboard(text) {
-        if (navigator.clipboard && window.isSecureContext) {
-            navigator.clipboard.writeText(text);
-        } else {
-            // Fallback for older browsers
-            const textArea = document.createElement('textarea');
-            textArea.value = text;
-            textArea.style.position = 'fixed';
-            textArea.style.left = '-999999px';
-            textArea.style.top = '-999999px';
-            document.body.appendChild(textArea);
-            textArea.focus();
-            textArea.select();
-            try {
-                document.execCommand('copy');
-            } catch (err) {
-                console.error('Failed to copy: ', err);
-            }
-            document.body.removeChild(textArea);
-        }
-    }
-    
-    showCopyFeedback(btn) {
-        const originalIcon = btn.innerHTML;
-        btn.innerHTML = '<i class="fas fa-check"></i>';
-        btn.style.background = 'var(--primary-600)';
-        
-        setTimeout(() => {
-            btn.innerHTML = originalIcon;
-            btn.style.background = '';
-        }, 2000);
     }
 }
 
@@ -819,7 +771,6 @@ class ShamratWebsite {
             this.managers.portfolio = new PortfolioManager();
             this.managers.floatingEmail = new FloatingEmailManager();
             this.managers.autoLogo = new AutoLogoTransitionManager();
-            this.managers.emailCopy = new EmailCopyManager();
             this.managers.contact = new ContactFormManager();
             this.managers.particles = new ParticleManager();
             this.managers.performance = new PerformanceManager();
