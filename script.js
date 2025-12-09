@@ -319,37 +319,7 @@ class PortfolioManager {
     }
 }
 
-// ===============================================
-// Floating Email Manager
-// ===============================================
 
-class FloatingEmailManager {
-    constructor() {
-        this.floatingEmail = document.getElementById('floating-email');
-        this.init();
-    }
-    
-    init() {
-        this.bindEvents();
-        this.showTooltip();
-    }
-    
-    bindEvents() {
-        if (this.floatingEmail) {
-            this.floatingEmail.addEventListener('click', () => {
-                window.location.href = 'mailto:shamrat.r.h@gmail.com?subject=Hello from your portfolio website';
-            });
-        }
-    }
-    
-    showTooltip() {
-        setTimeout(() => {
-            if (this.floatingEmail) {
-                this.floatingEmail.style.animation = 'pulse 2s ease-in-out 3';
-            }
-        }, 3000);
-    }
-}
 
 // ===============================================
 // Auto Logo Transition Manager
@@ -769,7 +739,7 @@ class ShamratWebsite {
             this.managers.navigation = new NavigationManager();
             this.managers.animation = new AnimationManager();
             this.managers.portfolio = new PortfolioManager();
-            this.managers.floatingEmail = new FloatingEmailManager();
+
             this.managers.autoLogo = new AutoLogoTransitionManager();
             this.managers.contact = new ContactFormManager();
             this.managers.particles = new ParticleManager();
