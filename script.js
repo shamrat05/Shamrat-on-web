@@ -260,35 +260,127 @@ class PortfolioManager {
 
     bindEvents() {
         this.filterBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
                 const filter = btn.getAttribute('data-filter');
-                this.filterPortfolio(filter);
-                this.updateActiveFilter(btn);
+                
+                // Add click animation
+                btn.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    btn.style.transform = '';
+                    this.filterPortfolio(filter);
+                    this.updateActiveFilter(btn);
+                }, 150);
             });
         });
     }
 
     filterPortfolio(filter) {
+        const visibleItems = [];
+        const hiddenItems = [];
+        
+        // Categorize items
         this.portfolioItems.forEach(item => {
             const category = item.getAttribute('data-category');
-            
             if (filter === 'all' || category === filter) {
-                item.classList.remove('hidden');
-                setTimeout(() => {
-                    item.style.display = 'block';
-                }, 50);
+                visibleItems.push(item);
             } else {
-                item.classList.add('hidden');
-                setTimeout(() => {
-                    item.style.display = 'none';
-                }, 300);
+                hiddenItems.push(item);
             }
+        });
+        
+        // Hide items with smooth animation
+        hiddenItems.forEach((item, index) => {
+            setTimeout(() => {
+                item.classList.add('hidden');
+            }, index * 50);
+        });
+        
+        // Show items with staggered animation
+        visibleItems.forEach((item, index) => {
+            setTimeout(() => {
+                item.classList.remove('hidden');
+                item.classList.add('show');
+                setTimeout(() => {
+                    item.classList.remove('show');
+                }, 800);
+            }, index * 100 + 200);
         });
     }
 
     updateActiveFilter(activeBtn) {
         this.filterBtns.forEach(btn => btn.classList.remove('active'));
         activeBtn.classList.add('active');
+    }
+}
+
+// ===============================================
+// Floating Email Manager
+// ===============================================
+
+class FloatingEmailManager {
+    constructor() {
+        this.floatingEmail = document.getElementById('floating-email');
+        this.init();
+    }
+    
+    init() {
+        this.bindEvents();
+        this.showTooltip();
+    }
+    
+    bindEvents() {
+        if (this.floatingEmail) {
+            this.floatingEmail.addEventListener('click', () => {
+                window.location.href = 'mailto:shamrat.r.h@gmail.com?subject=Hello from your portfolio website';
+            });
+        }
+    }
+    
+    showTooltip() {
+        setTimeout(() => {
+            if (this.floatingEmail) {
+                this.floatingEmail.style.animation = 'pulse 2s ease-in-out 3';
+            }
+        }, 3000);
+    }
+}
+
+// ===============================================
+// Auto Logo Transition Manager
+// ===============================================
+
+class AutoLogoTransitionManager {
+    constructor() {
+        this.logoText = document.getElementById('logo-text');
+        this.logoImage = document.getElementById('logo-image');
+        this.animatedLogo = document.querySelector('.animated-logo');
+        this.init();
+    }
+    
+    init() {
+        this.startAutoTransition();
+    }
+    
+    startAutoTransition() {
+        setInterval(() => {
+            this.transitionToImage();
+            setTimeout(() => {
+                this.transitionToText();
+            }, 3000);
+        }, 8000);
+    }
+    
+    transitionToImage() {
+        if (this.animatedLogo) {
+            this.animatedLogo.classList.add('show-image');
+        }
+    }
+    
+    transitionToText() {
+        if (this.animatedLogo) {
+            this.animatedLogo.classList.remove('show-image');
+        }
     }
 }
 
@@ -672,6 +764,8 @@ class ShamratWebsite {
             this.managers.navigation = new NavigationManager();
             this.managers.animation = new AnimationManager();
             this.managers.portfolio = new PortfolioManager();
+            this.managers.floatingEmail = new FloatingEmailManager();
+            this.managers.autoLogo = new AutoLogoTransitionManager();
             this.managers.contact = new ContactFormManager();
             this.managers.particles = new ParticleManager();
             this.managers.performance = new PerformanceManager();
