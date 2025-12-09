@@ -276,24 +276,19 @@ class PortfolioManager {
     }
 
     filterPortfolio(filter) {
-        const visibleItems = [];
-        const hiddenItems = [];
+        // First, hide all items
+        this.portfolioItems.forEach(item => {
+            item.classList.add('hidden');
+            item.classList.remove('show');
+        });
         
-        // Categorize items
+        // Then show relevant items with delay
+        const visibleItems = [];
         this.portfolioItems.forEach(item => {
             const category = item.getAttribute('data-category');
             if (filter === 'all' || category === filter) {
                 visibleItems.push(item);
-            } else {
-                hiddenItems.push(item);
             }
-        });
-        
-        // Hide items with smooth animation
-        hiddenItems.forEach((item, index) => {
-            setTimeout(() => {
-                item.classList.add('hidden');
-            }, index * 50);
         });
         
         // Show items with staggered animation
@@ -303,8 +298,8 @@ class PortfolioManager {
                 item.classList.add('show');
                 setTimeout(() => {
                     item.classList.remove('show');
-                }, 800);
-            }, index * 100 + 200);
+                }, 600);
+            }, index * 150);
         });
     }
 
@@ -381,6 +376,64 @@ class AutoLogoTransitionManager {
         if (this.animatedLogo) {
             this.animatedLogo.classList.remove('show-image');
         }
+    }
+}
+
+// ===============================================
+// Email Copy Manager
+// ===============================================
+
+class EmailCopyManager {
+    constructor() {
+        this.emailCopyBtns = document.querySelectorAll('.email-copy-btn');
+        this.init();
+    }
+    
+    init() {
+        this.bindEvents();
+    }
+    
+    bindEvents() {
+        this.emailCopyBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const email = btn.getAttribute('data-email');
+                this.copyToClipboard(email);
+                this.showCopyFeedback(btn);
+            });
+        });
+    }
+    
+    copyToClipboard(text) {
+        if (navigator.clipboard && window.isSecureContext) {
+            navigator.clipboard.writeText(text);
+        } else {
+            // Fallback for older browsers
+            const textArea = document.createElement('textarea');
+            textArea.value = text;
+            textArea.style.position = 'fixed';
+            textArea.style.left = '-999999px';
+            textArea.style.top = '-999999px';
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            try {
+                document.execCommand('copy');
+            } catch (err) {
+                console.error('Failed to copy: ', err);
+            }
+            document.body.removeChild(textArea);
+        }
+    }
+    
+    showCopyFeedback(btn) {
+        const originalIcon = btn.innerHTML;
+        btn.innerHTML = '<i class="fas fa-check"></i>';
+        btn.style.background = 'var(--primary-600)';
+        
+        setTimeout(() => {
+            btn.innerHTML = originalIcon;
+            btn.style.background = '';
+        }, 2000);
     }
 }
 
@@ -766,6 +819,7 @@ class ShamratWebsite {
             this.managers.portfolio = new PortfolioManager();
             this.managers.floatingEmail = new FloatingEmailManager();
             this.managers.autoLogo = new AutoLogoTransitionManager();
+            this.managers.emailCopy = new EmailCopyManager();
             this.managers.contact = new ContactFormManager();
             this.managers.particles = new ParticleManager();
             this.managers.performance = new PerformanceManager();
