@@ -427,51 +427,126 @@ a:hover {
   line-height: 1.6;
 }
 
-.hero-contact {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-md);
-  margin-bottom: var(--space-xl);
+/* Animated Logo Styles */
+.animated-logo {
+  position: relative;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.contact-link {
+.logo-text {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   display: flex;
   align-items: center;
-  gap: var(--space-xs);
-  padding: var(--space-xs) var(--space-sm);
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid var(--border-default);
-  border-radius: var(--border-radius-sm);
-  color: var(--text-secondary);
-  text-decoration: none;
-  transition: all var(--transition-normal);
-  font-size: 0.9rem;
-}
-
-.contact-link:hover {
-  background: var(--primary-500);
+  justify-content: center;
+  background: linear-gradient(135deg, var(--primary-500), var(--primary-400));
   color: white;
-  border-color: var(--primary-500);
-  transform: translateY(-1px);
+  font-weight: 700;
+  font-size: 1.2rem;
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 2;
 }
 
-.contact-link i {
-  color: var(--primary-500);
-  transition: color var(--transition-normal);
+.logo-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transform: scale(0.8);
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 50%;
+  overflow: hidden;
 }
 
-.contact-link:hover i {
+.logo-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.animated-logo:hover .logo-text {
+  opacity: 0;
+  transform: scale(0.8);
+}
+
+.animated-logo:hover .logo-image {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.animated-logo:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 20px rgba(10, 132, 255, 0.4);
+}
+
+/* Floating Email Button */
+.floating-email {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, var(--primary-500), var(--primary-400));
   color: white;
+  border: none;
+  border-radius: 50%;
+  font-size: 1.5rem;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(10, 132, 255, 0.3);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.contact-link.location {
-  cursor: default;
+.floating-email:hover {
+  transform: translateY(-3px) scale(1.1);
+  box-shadow: 0 8px 30px rgba(10, 132, 255, 0.5);
 }
 
-.contact-link.location:hover {
-  background: rgba(255, 255, 255, 0.05);
-  color: var(--text-secondary);
-  border-color: var(--border-default);
+.floating-email:hover .email-tooltip {
+  opacity: 1;
+  transform: translateY(-5px);
+}
+
+.email-tooltip {
+  position: absolute;
+  bottom: 70px;
+  right: 0;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateY(0);
+  transition: all 0.3s ease;
+  pointer-events: none;
+}
+
+.email-tooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  right: 20px;
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 6px solid rgba(0, 0, 0, 0.8);
+}
   transform: none;
 }
 
@@ -511,6 +586,90 @@ a:hover {
   position: relative;
   width: 400px;
   height: 400px;
+  margin: 0 auto;
+}
+
+/* Motivational Text Animation */
+.motivational-text {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.motivation-word {
+  position: absolute;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-shadow: 0 0 10px rgba(10, 132, 255, 0.8);
+  animation: rotateText 20s linear infinite;
+  opacity: 0;
+}
+
+.motivation-word:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.motivation-word:nth-child(2) {
+  animation-delay: 4s;
+}
+
+.motivation-word:nth-child(3) {
+  animation-delay: 8s;
+}
+
+.motivation-word:nth-child(4) {
+  animation-delay: 12s;
+}
+
+.motivation-word:nth-child(5) {
+  animation-delay: 16s;
+}
+
+@keyframes rotateText {
+  0% {
+    transform: rotate(0deg) translateX(220px) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: rotate(360deg) translateX(220px) rotate(-360deg);
+    opacity: 0;
+  }
+}
+
+/* Enhanced Profile Image */
+.profile-image {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid var(--bg-surface);
+  box-shadow: 0 0 40px rgba(10, 132, 255, 0.3);
+  animation: profileGlow 3s ease-in-out infinite alternate;
+  position: relative;
+  z-index: 2;
+}
+
+.image-glow {
+  position: absolute;
+  top: -20px;
+  left: -20px;
+  right: -20px;
+  bottom: -20px;
+  background: linear-gradient(135deg, var(--primary-500), var(--primary-400));
+  border-radius: 50%;
+  opacity: 0.2;
+  z-index: 1;
+  animation: glowPulse 4s ease-in-out infinite alternate;
 }
 
 .profile-image {
@@ -742,6 +901,39 @@ a:hover {
   font-weight: 500;
 }
 
+/* Additional Animations */
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 4px 20px rgba(10, 132, 255, 0.3);
+  }
+  50% {
+    transform: scale(1.1);
+    box-shadow: 0 8px 30px rgba(10, 132, 255, 0.6);
+  }
+}
+
+@keyframes floatUp {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+}
+
+.animated-logo.show-image .logo-text {
+  opacity: 0;
+  transform: scale(0.8);
+}
+
+.animated-logo.show-image .logo-image {
+  opacity: 1;
+  transform: scale(1);
+}
+
 /* ===============================================
    Skills Section - Modern Tags Design
    =============================================== */
@@ -941,17 +1133,42 @@ a:hover {
   padding: var(--space-xs) var(--space-md);
   border-radius: var(--border-radius-full);
   cursor: pointer;
-  transition: all var(--transition-normal);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   font-family: var(--font-body);
   font-size: 14px;
   font-weight: 500;
+  position: relative;
+  overflow: hidden;
 }
 
-.filter-btn:hover,
+.filter-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.filter-btn:hover::before {
+  left: 100%;
+}
+
+.filter-btn:hover {
+  background: var(--primary-500);
+  color: white;
+  border-color: var(--primary-500);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(10, 132, 255, 0.3);
+}
+
 .filter-btn.active {
   background: var(--primary-500);
   color: white;
   border-color: var(--primary-500);
+  box-shadow: 0 4px 15px rgba(10, 132, 255, 0.3);
 }
 
 .portfolio-grid {
@@ -962,14 +1179,34 @@ a:hover {
 
 .portfolio-item {
   opacity: 1;
-  transform: scale(1);
-  transition: all var(--transition-normal);
+  transform: scale(1) translateY(0);
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform, opacity;
 }
 
 .portfolio-item.hidden {
   opacity: 0;
-  transform: scale(0.8);
+  transform: scale(0.7) translateY(30px);
   pointer-events: none;
+}
+
+.portfolio-item.show {
+  animation: portfolioSlideIn 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes portfolioSlideIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.7) translateY(50px);
+  }
+  60% {
+    opacity: 0.8;
+    transform: scale(1.05) translateY(-5px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
 }
 
 .portfolio-card {
@@ -1261,20 +1498,22 @@ a:hover {
 .form-group textarea {
   width: 100%;
   padding: var(--space-sm) var(--space-md);
-  background: var(--bg-page);
-  border: 1px solid var(--border-default);
+  background: var(--bg-surface);
+  border: 2px solid var(--border-default);
   border-radius: var(--border-radius-sm);
   color: var(--text-primary);
   font-family: var(--font-body);
   font-size: 16px;
   transition: all var(--transition-normal);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .form-group input:focus,
 .form-group textarea:focus {
   outline: none;
   border-color: var(--primary-500);
-  box-shadow: 0 0 0 4px rgba(10, 132, 255, 0.25);
+  box-shadow: 0 0 0 4px rgba(10, 132, 255, 0.25), inset 0 2px 4px rgba(0, 0, 0, 0.1);
+  background: var(--bg-page);
 }
 
 .form-group textarea {
@@ -1677,6 +1916,56 @@ a:hover {
   .form-group input,
   .form-group textarea {
     font-size: 16px; /* Prevent zoom on iOS */
+  }
+  
+  /* Mobile Responsive - New Elements */
+  .floating-email {
+    width: 50px;
+    height: 50px;
+    bottom: 20px;
+    right: 20px;
+    font-size: 1.2rem;
+  }
+  
+  .email-tooltip {
+    font-size: 0.7rem;
+    padding: 6px 10px;
+    bottom: 60px;
+  }
+  
+  .animated-logo {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .logo-text {
+    font-size: 1rem;
+  }
+  
+  .image-container {
+    width: 300px;
+    height: 300px;
+  }
+  
+  .motivation-word {
+    font-size: 0.7rem;
+  }
+  
+  @keyframes rotateText {
+    0% {
+      transform: rotate(0deg) translateX(170px) rotate(0deg);
+      opacity: 0;
+    }
+    10% {
+      opacity: 1;
+    }
+    90% {
+      opacity: 1;
+    }
+    100% {
+      transform: rotate(360deg) translateX(170px) rotate(-360deg);
+      opacity: 0;
+    }
   }
 }
 
