@@ -155,7 +155,7 @@ class AnimationManager {
 
     init() {
         this.initScrollAnimations();
-        this.initSkillBars();
+        this.initSkillTags();
         this.initBackToTop();
     }
 
@@ -203,21 +203,21 @@ class AnimationManager {
         });
     }
 
-    initSkillBars() {
-        const skillBars = document.querySelectorAll('.skill-progress');
+    initSkillTags() {
+        const skillTags = document.querySelectorAll('.skill-tag');
         
         const skillObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    const progressBar = entry.target;
-                    const progress = progressBar.getAttribute('data-progress');
-                    progressBar.style.setProperty('--progress-width', `${progress}%`);
-                    skillObserver.unobserve(progressBar);
+                    const skillTag = entry.target;
+                    // Add a subtle bounce effect when skill tags come into view
+                    skillTag.style.animation = `skillTagSlide 0.6s ease-out forwards, skillTagBounce 0.8s ease-out 0.6s`;
+                    skillObserver.unobserve(skillTag);
                 }
             });
-        }, { threshold: 0.5 });
+        }, { threshold: 0.3 });
 
-        skillBars.forEach(bar => skillObserver.observe(bar));
+        skillTags.forEach(tag => skillObserver.observe(tag));
         this.observers.push(skillObserver);
     }
 
@@ -323,7 +323,7 @@ class ContactFormManager {
         e.preventDefault();
         
         if (this.validateForm()) {
-            this.submitForm();
+            this.submitForm(e);
         }
     }
 
@@ -409,42 +409,63 @@ class ContactFormManager {
         }
     }
 
-    async submitForm() {
+    async submitForm(event) {
+        event.preventDefault(); // Prevent default form submission
+        
         const submitBtn = this.form.querySelector('button[type="submit"]');
         const originalText = submitBtn.innerHTML;
         
         // Show loading state
-        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Opening Email Client...';
         submitBtn.disabled = true;
-        this.form.classList.add('loading');
 
         try {
-            // Simulate form submission (replace with actual form handling)
-            await this.simulateFormSubmission();
+            // Create mailto link with form data
+            const formData = new FormData(this.form);
+            const name = formData.get('Name');
+            const email = formData.get('Email');
+            const subject = formData.get('Subject');
+            const message = formData.get('Message');
+            
+            const mailtoSubject = encodeURIComponent(subject || 'Message from Portfolio Website');
+            const mailtoBody = encodeURIComponent(
+                `Name: ${name}\n` +
+                `Email: ${email}\n\n` +
+                `Message:\n${message}\n\n` +
+                `---\n` +
+                `Sent from Shamrat's Portfolio Website`
+            );
+            
+            const mailtoLink = `mailto:shamrat.r.h@gmail.com?subject=${mailtoSubject}&body=${mailtoBody}`;
+            
+            // Open email client
+            window.location.href = mailtoLink;
+            
+            // Show success message
             this.showSuccessMessage();
-            this.form.reset();
+            
+            // Reset form after a short delay
+            setTimeout(() => {
+                this.form.reset();
+            }, 1000);
+            
         } catch (error) {
             this.showErrorMessage();
         } finally {
             // Reset button state
-            submitBtn.innerHTML = originalText;
-            submitBtn.disabled = false;
-            this.form.classList.remove('loading');
+            setTimeout(() => {
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+            }, 2000);
         }
     }
 
-    simulateFormSubmission() {
-        return new Promise((resolve) => {
-            setTimeout(resolve, 2000); // Simulate network delay
-        });
-    }
-
     showSuccessMessage() {
-        this.showMessage('Thank you! Your message has been sent successfully.', 'success');
+        this.showMessage('Your email client should now be open with the message. If it didn\'t open, please email directly to shamrat.r.h@gmail.com', 'success');
     }
 
     showErrorMessage() {
-        this.showMessage('Sorry, there was an error sending your message. Please try again.', 'error');
+        this.showMessage('Please try again or email directly to shamrat.r.h@gmail.com', 'error');
     }
 
     showMessage(message, type) {
