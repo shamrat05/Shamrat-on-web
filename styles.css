@@ -515,9 +515,8 @@ a:hover {
   box-shadow: 0 8px 30px rgba(10, 132, 255, 0.5);
 }
 
-.floating-email:hover {
-  transform: translateY(-3px) scale(1.1);
-  box-shadow: 0 8px 30px rgba(10, 132, 255, 0.5);
+
+  transform: none;
 }
 
 .contact-item {
@@ -530,30 +529,6 @@ a:hover {
 .contact-item i {
   color: var(--primary-500);
   width: 16px;
-  transition: all 0.3s ease;
-}
-
-.email-copy-btn {
-  cursor: pointer;
-  padding: var(--space-xs);
-  border-radius: 50%;
-  transition: all 0.3s ease;
-}
-
-.email-copy-btn:hover {
-  background: var(--primary-500);
-  transform: scale(1.1);
-}
-
-.email-copy-btn:hover i {
-  color: white;
-}
-
-.copy-hint {
-  font-size: 0.8rem;
-  color: var(--text-secondary);
-  margin: 0;
-  opacity: 0.7;
 }
 
 .contact-item a {
@@ -595,17 +570,13 @@ a:hover {
 
 .motivation-word {
   position: absolute;
-  top: 50%;
-  left: 50%;
   color: rgba(255, 255, 255, 0.6);
   font-size: 0.9rem;
   font-weight: 600;
   text-shadow: 0 0 10px rgba(10, 132, 255, 0.8);
-  animation: rotateText 20s linear infinite;
+  animation: circularRotate 15s linear infinite;
   opacity: 0;
   transform-origin: center;
-  white-space: nowrap;
-  z-index: 3;
 }
 
 .motivation-word:nth-child(1) {
@@ -613,34 +584,34 @@ a:hover {
 }
 
 .motivation-word:nth-child(2) {
-  animation-delay: 4s;
+  animation-delay: 3s;
 }
 
 .motivation-word:nth-child(3) {
-  animation-delay: 8s;
+  animation-delay: 6s;
 }
 
 .motivation-word:nth-child(4) {
-  animation-delay: 12s;
+  animation-delay: 9s;
 }
 
 .motivation-word:nth-child(5) {
-  animation-delay: 16s;
+  animation-delay: 12s;
 }
 
-@keyframes rotateText {
+@keyframes circularRotate {
   0% {
-    transform: rotate(0deg) translateY(-180px) rotate(0deg);
+    transform: rotate(0deg) translateX(180px) rotate(0deg);
     opacity: 0;
   }
-  10% {
+  5% {
     opacity: 1;
   }
-  90% {
+  95% {
     opacity: 1;
   }
   100% {
-    transform: rotate(360deg) translateY(-180px) rotate(-360deg);
+    transform: rotate(360deg) translateX(180px) rotate(-360deg);
     opacity: 0;
   }
 }
@@ -1926,6 +1897,7 @@ a:hover {
     font-size: 1.2rem;
   }
   
+
   
   .animated-logo {
     width: 40px;
@@ -1945,19 +1917,19 @@ a:hover {
     font-size: 0.7rem;
   }
   
-  @keyframes rotateText {
+  @keyframes circularRotate {
     0% {
-      transform: rotate(0deg) translateY(-130px) rotate(0deg);
+      transform: rotate(0deg) translateX(140px) rotate(0deg);
       opacity: 0;
     }
-    10% {
+    5% {
       opacity: 1;
     }
-    90% {
+    95% {
       opacity: 1;
     }
     100% {
-      transform: rotate(360deg) translateY(-130px) rotate(-360deg);
+      transform: rotate(360deg) translateX(140px) rotate(-360deg);
       opacity: 0;
     }
   }
