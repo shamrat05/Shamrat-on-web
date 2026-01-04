@@ -1,0 +1,155 @@
+{#
+Google Analytics 4 with Consent Mode
+This component handles privacy-compliant analytics tracking
+#}
+
+<!-- Google Analytics 4 with Consent Mode -->
+<script>
+  // Consent Mode Configuration
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  
+  // Set default consent to 'denied' for privacy compliance
+  gtag('consent', 'default', {
+    'ad_storage': 'denied',
+    'analytics_storage': 'denied',
+    'functionality_storage': 'granted',
+    'security_storage': 'granted'
+  });
+
+  // Initialize GA4
+  gtag('js', new Date());
+  
+  // Replace 'GA_MEASUREMENT_ID' with your actual GA4 Measurement ID
+  // You can get this from Google Analytics > Admin > Data Streams > Web Stream
+  const GA_MEASUREMENT_ID = 'G-XXXXXXXXXX'; // TODO: Replace with actual GA4 Measurement ID
+  
+  gtag('config', GA_MEASUREMENT_ID, {
+    page_title: '{{ title | default("Homepage") }}',
+    page_location: '{{ site.url }}{{ page.url | default("/") }}',
+    send_page_view: true
+  });
+</script>
+
+<!-- Consent Banner (Optional) -->
+<div id="cookie-consent-banner" style="display: none; position: fixed; bottom: 20px; left: 20px; right: 20px; background: var(--bg-surface); border: 1px solid var(--border-default); border-radius: 12px; padding: 20px; z-index: 10000; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);">
+  <div style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 200px;">
+      <h4 style="margin: 0 0 8px 0; color: var(--text-primary);">Cookie Consent</h4>
+      <p style="margin: 0; color: var(--text-secondary); font-size: 14px;">
+        We use cookies to enhance your experience and analyze site traffic. 
+        By clicking "Accept All", you consent to our use of cookies.
+      </p>
+    </div>
+    <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+      <button id="cookie-accept" style="padding: 8px 16px; background: var(--primary-500); color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 14px;">
+        Accept All
+      </button>
+      <button id="cookie-decline" style="padding: 8px 16px; background: var(--bg-page); color: var(--text-primary); border: 1px solid var(--border-default); border-radius: 6px; cursor: pointer; font-size: 14px;">
+        Decline
+      </button>
+      <a href="/privacy-policy" style="padding: 8px 16px; background: transparent; color: var(--primary-500); border: 1px solid var(--primary-500); border-radius: 6px; text-decoration: none; font-size: 14px;">
+        Privacy Policy
+      </a>
+    </div>
+  </div>
+</div>
+
+<script>
+// Cookie Consent Management
+(function() {
+  const consentKey = 'cookie-consent';
+  const banner = document.getElementById('cookie-consent-banner');
+  const acceptBtn = document.getElementById('cookie-accept');
+  const declineBtn = document.getElementById('cookie-decline');
+  
+  // Check if user has already made a choice
+  const userConsent = localStorage.getItem(consentKey);
+  
+  if (!userConsent) {
+    // Show banner if no consent decision has been made
+    banner.style.display = 'block';
+  }
+  
+  // Accept button handler
+  acceptBtn.addEventListener('click', function() {
+    // Grant consent for analytics
+    gtag('consent', 'update', {
+      'analytics_storage': 'granted',
+      'ad_storage': 'granted'
+    });
+    
+    // Store consent in localStorage
+    localStorage.setItem(consentKey, 'accepted');
+    
+    // Hide banner
+    banner.style.display = 'none';
+    
+    // Track consent acceptance (if analytics is now granted)
+    if (typeof gtag !== 'undefined') {
+      gtag('event', 'consent_update', {
+        'consent_status': 'accepted',
+        'consent_timestamp': new Date().toISOString()
+      });
+    }
+  });
+  
+  // Decline button handler
+  declineBtn.addEventListener('click', function() {
+    // Maintain denied consent
+    gtag('consent', 'update', {
+      'analytics_storage': 'denied',
+      'ad_storage': 'denied'
+    });
+    
+    // Store consent in localStorage
+    localStorage.setItem(consentKey, 'declined');
+    
+    // Hide banner
+    banner.style.display = 'none';
+    
+    // Track consent decline
+    if (typeof gtag !== 'undefined') {
+      gtag('event', 'consent_update', {
+        'consent_status': 'declined',
+        'consent_timestamp': new Date().toISOString()
+      });
+    }
+  });
+})();
+
+// Enhanced Analytics Tracking
+function trackUserInteraction(action, category, label) {
+  // Only track if consent has been granted
+  if (typeof gtag !== 'undefined') {
+    gtag('event', action, {
+      'event_category': category,
+      'event_label': label,
+      'value': 1
+    });
+  }
+}
+
+// Track important user interactions
+document.addEventListener('DOMContentLoaded', function() {
+  // Track blog post reads
+  if (window.location.pathname.includes('/blog/')) {
+    trackUserInteraction('view_content', 'Blog', document.title);
+  }
+  
+  // Track contact form interactions
+  const contactForm = document.getElementById('contact-form');
+  if (contactForm) {
+    contactForm.addEventListener('submit', function() {
+      trackUserInteraction('generate_lead', 'Contact', 'Form Submission');
+    });
+  }
+  
+  // Track external link clicks
+  document.querySelectorAll('a[href^="http"]').forEach(function(link) {
+    link.addEventListener('click', function() {
+      trackUserInteraction('click', 'External Link', this.href);
+    });
+  });
+});
+</script>
