@@ -1,0 +1,43 @@
+---
+layout: base.njk
+schema_type: CreativeWork
+---
+<div class="blog-post-container">
+    <div class="blog-post-wrapper">
+        <article>
+            <header class="blog-post-header">
+                <div class="blog-post-category">{{ category }}</div>
+                <h1 class="blog-post-title">{{ title }}</h1>
+                <p class="section-subtitle">{{ description }}</p>
+                
+                <div class="portfolio-tags" style="justify-content: center; margin-top: var(--space-md);">
+                    {% for tag in tags %}
+                    <span>{{ tag }}</span>
+                    {% endfor %}
+                </div>
+            </header>
+
+            {% if image %}
+            <div class="blog-post-image-container" style="margin-bottom: var(--space-xl);">
+                <img src="{{ image }}" alt="{{ title }}" class="blog-post-image" style="width: 100%; border-radius: var(--border-radius-md); box-shadow: 0 20px 40px rgba(0,0,0,0.2);">
+            </div>
+            {% endif %}
+
+            <div class="blog-post-content">
+                {{ content | safe }}
+            </div>
+
+            <div class="blog-post-actions">
+                <h3>Interested in a similar project?</h3>
+                <a href="/#contact" class="back-to-blog">
+                    <i class="fas fa-envelope"></i>
+                    Get In Touch
+                </a>
+                <br><br>
+                <a href="/portfolio/" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left"></i> Back to Portfolio
+                </a>
+            </div>
+        </article>
+    </div>
+</div>

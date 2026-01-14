@@ -1,0 +1,72 @@
+/* ===============================================
+   Reset & Base Styles
+   =============================================== */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: 18px;
+  line-height: 1.7;
+  color: var(--text-primary);
+  background-color: var(--bg-page);
+  transition: background-color var(--transition-normal), color var(--transition-normal);
+  overflow-x: hidden;
+  
+  /* Performance Optimizations */
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Butter Smooth Scrolling and Section Rendering */
+section {
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 500px; /* Helps browser estimate layout */
+}
+
+/* Force GPU acceleration for elements that transition or use glassmorphism */
+.navbar,
+.hero-content,
+.portfolio-card,
+.blog-card,
+.timeline-content,
+.highlight-item,
+.stat-item,
+.cert-item {
+  will-change: transform, opacity, backdrop-filter;
+  transform: translateZ(0); /* Trigger hardware acceleration */
+}
+
+/* Selection */
+::selection {
+  background-color: var(--primary-500);
+  color: white;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-surface);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--primary-500);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-400);
+}

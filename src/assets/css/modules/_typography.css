@@ -1,0 +1,30 @@
+/* ===============================================
+   Typography
+   =============================================== */
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--text-primary);
+}
+
+h1 { font-size: 64px; font-weight: 700; }
+h2 { font-size: 48px; font-weight: 700; }
+h3 { font-size: 24px; font-weight: 600; }
+h4 { font-size: 20px; font-weight: 600; }
+
+p {
+  color: var(--text-primary);
+  margin-bottom: var(--space-sm);
+}
+
+a {
+  color: var(--primary-500);
+  text-decoration: none;
+  transition: color var(--transition-normal);
+}
+
+a:hover {
+  color: var(--primary-400);
+}

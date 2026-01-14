@@ -1,0 +1,27 @@
+/* ===============================================
+   Shamrat Hossain Portfolio - Main Stylesheet
+   Modular Architecture Refactor
+   =============================================== */
+
+/* Core Systems */
+@import "./modules/_variables.css";
+@import "./modules/_reset.css";
+@import "./modules/_typography.css";
+@import "./modules/_animations.css";
+
+/* Layout & Components */
+@import "./modules/_layout.css";
+@import "./modules/_navigation.css";
+@import "./modules/_footer.css";
+
+/* Sections */
+@import "./modules/_hero.css";
+@import "./modules/_about.css";
+@import "./modules/_experience.css";
+@import "./modules/_skills.css";
+@import "./modules/_portfolio.css";
+@import "./modules/_blog.css";
+@import "./modules/_contact.css";
+
+/* Responsive Design (Must be last) */
+@import "./modules/_responsive.css";

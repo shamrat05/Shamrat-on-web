@@ -1,0 +1,77 @@
+/* ===============================================
+   CSS Variables & Theme System
+   =============================================== */
+
+:root {
+  /* Color System - Dark Theme (Default) */
+  --bg-page: #0A0A0A;
+  --bg-surface: #141414;
+  --primary-500: #0A84FF;
+  --primary-400: #3B9EFF;
+  --primary-600: #0052AC;
+  --primary-900: #00284D;
+  --primary-50: #EAF5FF;
+  --text-primary: #E4E4E7;
+  --text-secondary: #A1A1AA;
+  --border-default: #27272A;
+  --semantic-success: #34D399;
+  --semantic-error: #F87171;
+  
+  /* Spacing System */
+  --space-xs: 8px;
+  --space-sm: 16px;
+  --space-md: 24px;
+  --space-lg: 32px;
+  --space-xl: 48px;
+  --space-xxl: 96px;
+  --space-xxxl: 128px;
+  
+  /* Typography */
+  --font-heading: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-body: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  
+  /* Layout */
+  --max-width: 1280px;
+  --border-radius-sm: 8px;
+  --border-radius-md: 12px;
+  --border-radius-full: 9999px;
+  
+  /* Transitions */
+  --transition-fast: 150ms ease;
+  --transition-normal: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 500ms cubic-bezier(0.4, 0, 0.2, 1);
+  
+  /* Image Settings - Default Values */
+  --profile-image-width: 325px;
+  --profile-image-height: 325px;
+  --profile-image-border-radius: 50%;
+  --profile-image-border-width: 4px;
+  --profile-image-border-color: var(--bg-surface);
+  --profile-image-box-shadow: 0 0 40px rgba(10, 132, 255, 0.3);
+  --profile-image-object-fit: cover;
+  --profile-image-object-position: center;
+  
+  --portfolio-image-height: 250px;
+  --portfolio-image-object-fit: cover;
+  --portfolio-image-object-position: center;
+  
+  --blog-image-height: 200px;
+  --blog-image-object-fit: cover;
+  --blog-image-object-position: center;
+}
+
+/* Light Theme */
+[data-theme="light"] {
+  --bg-page: #F8F9FA;
+  --bg-surface: #FFFFFF;
+  --primary-500: #0063D1;
+  --primary-400: #3B9EFF;
+  --primary-600: #0052AC;
+  --primary-900: #00284D;
+  --primary-50: #EAF5FF;
+  --text-primary: #18181B;
+  --text-secondary: #71717A;
+  --border-default: #E4E4E7;
+  --semantic-success: #10B981;
+  --semantic-error: #EF4444;
+}

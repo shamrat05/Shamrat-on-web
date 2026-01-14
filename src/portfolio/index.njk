@@ -1,0 +1,53 @@
+---
+layout: base.njk
+title: Portfolio
+description: A collection of my professional work in marketing, operations, and analytics.
+---
+
+<div class="blog-page-container">
+    <div class="container">
+        <div class="section-header">
+            <h1 class="section-title">All Projects</h1>
+            <p class="section-subtitle">A comprehensive look at my work in marketing, operations, and analytics.</p>
+        </div>
+
+        <div class="portfolio-filters" style="margin-bottom: var(--space-xxl);">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="analytics">Analytics</button>
+            <button class="filter-btn" data-filter="marketing">Marketing</button>
+            <button class="filter-btn" data-filter="operations">Operations</button>
+        </div>
+
+        <div class="portfolio-grid">
+            {% for item in collections.portfolio | reverse %}
+            <div class="portfolio-item" data-category="{{ item.data.category }}">
+                <div class="portfolio-card">
+                    <a href="{{ item.url }}" style="text-decoration: none; color: inherit; display: block; height: 100%;">
+                        <div class="portfolio-image">
+                            <img src="{{ item.data.image }}" alt="{{ item.data.title }}" loading="lazy">
+                            <div class="portfolio-overlay">
+                                <span class="portfolio-link"><i class="fas fa-eye"></i> View Case Study</span>
+                            </div>
+                        </div>
+                        <div class="portfolio-content">
+                            <h3>{{ item.data.title }}</h3>
+                            <p>{{ item.data.description }}</p>
+                            <div class="portfolio-tags">
+                                {% for tag in item.data.tags %}
+                                <span>{{ tag }}</span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="blog-back-home">
+            <a href="/" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> Back to Home
+            </a>
+        </div>
+    </div>
+</div>
